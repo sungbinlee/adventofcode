@@ -7,7 +7,6 @@ def simulation(grid: list[list[str]]) -> int:
     start_x = grid[0].index('S')
     cur_beams = {(start_x, 1): 1}
 
-
     for y in range(1, height - 1):
         next_beams = defaultdict(int)
 
