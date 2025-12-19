@@ -20,10 +20,9 @@ def build_button_masks(buttons: list[list[int]]) -> list[int]:
 
 
 def parse_line(line: str):
-    target_part = line[line.index("{") + 1: line.index("}")]
-    target = [int(x) for x in target_part.split(",")]
-
+    diagram = line[line.index("[") + 1: line.index("]")]
     buttons_part = line[line.index("]") + 1: line.index("{")]
+
     buttons = []
     for token in buttons_part.split():
         if token.startswith("("):
@@ -31,7 +30,7 @@ def parse_line(line: str):
                 [int(x) for x in token.strip("()").split(",") if x]
             )
 
-    return target, buttons
+    return diagram, buttons
 
 
 def bfs_min_presses(target: int, button_masks: list[int]) -> int:
@@ -56,9 +55,13 @@ def main():
     with open('input.txt') as f:
         for line in f:
             line = line.strip()
+            diagram, buttons = parse_line(line)
+            target = build_target_mask(diagram)
+            button_masks = build_button_masks(buttons)
 
-            target, buttons = parse_line(line)
-            answer += solve_machine(target, buttons)
+            presses = bfs_min_presses(target, button_masks)
+            answer += presses
+
     print(answer)
 
 
