@@ -32,5 +32,6 @@ def main():
     result = count_paths(graph, start="you", end="out")
     print(result)
 
+
 if __name__ == "__main__":
     main()
